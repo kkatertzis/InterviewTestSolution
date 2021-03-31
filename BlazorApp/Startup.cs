@@ -32,24 +32,14 @@ namespace BlazorApp
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
 
-            #region -- Implement with http client --
-            //services.AddTransient<CustomHttpClient>();
-            //services.AddSingleton<ICustomersClient, CustomersClient>();
-            //services.AddHttpClient();
-            #endregion
-
-            #region -- Implement with default RSignal and service --
             services.AddTransient<ICustomers, CustomerDataAccessLayer>();
             services.AddScoped<CustomersService>();
-            #endregion
 
             services.AddDbContext<CustomersDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-
-            //services.AddMvc().AddNewtonsoftJson();
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
@@ -80,7 +70,6 @@ namespace BlazorApp
                 endpoints.MapControllers();
             });
 
-            //app.UseBlazor<Client.Startup>();
         }
     }
 }
