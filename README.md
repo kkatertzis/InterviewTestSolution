@@ -10,7 +10,7 @@ Projects included in solution:
 - BlazorApp: main project (includes the API implementation as well)
 - BlazorAppUnitTest: Unit Test project (xUnit)
 - BlazorAppIntegrationTests: Unit Test project (xUnit)
-- 
+
 ## Installation Notes
 BlazorApp and BlazorAppUnitTest projects are configured to run on local Microsoft SQL server database. Projects run on separate databases (CustomerDb and CustomerTestDb).
 BlazorAppIntegrationTests project is configured to run with InMemoryDatabase configuration.
