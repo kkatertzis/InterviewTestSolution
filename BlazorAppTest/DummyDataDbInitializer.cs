@@ -5,7 +5,7 @@ using BlazorApp.Models;
 using BlazorApp.Data;
 using System.Linq;
 
-namespace BlazorAppTest
+namespace BlazorAppUnitTest
 {
     public class DummyDataDbInitializer
     {
