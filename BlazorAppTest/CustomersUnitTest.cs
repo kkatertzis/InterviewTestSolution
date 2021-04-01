@@ -8,6 +8,7 @@ using BlazorApp.Models;
 using FluentAssertions;
 using System.Net;
 using System.Collections.Generic;
+using BlazorApp.Shared;
 
 namespace BlazorAppTest
 {
@@ -80,14 +81,13 @@ namespace BlazorAppTest
         {
             //Arrange  
             var controller = new CustomersController(customersDAL);
+            controller.ModelState.AddModelError("CompanyName", "Required");
 
             //Act  
             var data = await controller.Get();
-            data = null;
 
-            if (data != null)
-                //Assert  
-                Assert.IsType<BadRequestResult>(data);
+            //Assert  
+            Assert.IsType<BadRequestResult>(data);
         }
 
         [Fact]
@@ -120,9 +120,61 @@ namespace BlazorAppTest
 
         #endregion
 
+        #region list paged
+        [Fact]
+        public async void CustomerController_GetCustomersPaged_ReturnOkResult()
+        {
+            //Arrange  
+            var controller = new CustomersController(customersDAL);
+
+            //Act  
+            var data = await controller.GetPaged(1, 4);
+
+            //Assert  
+            Assert.IsType<OkObjectResult>(data);
+        }
+
+        [Fact]
+        public async void CustomerController_GetCustomersPaged_ReturnBadRequestResult()
+        {
+            //Arrange  
+            var controller = new CustomersController(customersDAL);
+            controller.ModelState.AddModelError("CompanyName", "Required");
+            //Act  
+            var data = await controller.GetPaged(5, 10);
+            //data = null;
+
+            //if (data != null)
+            //Assert  
+            Assert.IsType<BadRequestResult>(data);
+        }
+
+        [Fact]
+        public async void CustomerController_GetCustomersPaged_MatchResultCount()
+        {
+            //Arrange  
+            var controller = new CustomersController(customersDAL);
+
+            //Act  
+            var data = await controller.GetPaged(1, 4);
+
+            //Assert  
+            var okObjectResult = data as OkObjectResult;
+            Assert.NotNull(okObjectResult);
+
+            var pagedResult = okObjectResult.Value as PagedResult<Customer>;
+            Assert.NotNull(pagedResult);
+
+            Assert.IsType<OkObjectResult>(data);
+
+            Assert.Equal(4, pagedResult.Results.Count);
+        }
+
+        #endregion
+
         #region create
         [Fact]
-        public async void CustomerController_CreateCustomer_ReturnStatusCode201forStatusOk()
+        public async void CustomerController_CreateCustomer_ReturnOkResult()
         {
             //Arrange  
             var controller = new CustomersController(customersDAL);
@@ -142,7 +194,7 @@ namespace BlazorAppTest
         }
 
         [Fact]
-        public async void CustomerController_CreateCustomer_ReturnStatusCode400forBadRequest()
+        public async void CustomerController_CreateCustomer_ReturnBadRequest()
         {
             //Arrange  
             var controller = new CustomersController(customersDAL);
@@ -155,7 +207,8 @@ namespace BlazorAppTest
             objTestCustomer.ContactName = testContactName;
 
             // Assert
-            Assert.Equal<HttpStatusCode>(HttpStatusCode.BadRequest, (HttpStatusCode)actualResult.StatusCode);
+            Assert.IsType<BadRequestResult>(data);
+            //Assert.Equal<HttpStatusCode>(HttpStatusCode.BadRequest, (HttpStatusCode)actualResult.StatusCode);
         }
 
         [Fact]
@@ -317,7 +370,7 @@ namespace BlazorAppTest
         }
 
         [Fact]
-        public async void CustomeromerController_UpdateCustomer_ReturnNotFound()
+        public async void CustomerController_UpdateCustomer_ReturnNotFound()
         {
             //Arrange
             var controller = new CustomersController(customersDAL);

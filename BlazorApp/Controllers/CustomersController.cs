@@ -30,6 +30,11 @@ namespace BlazorApp.Controllers
         //public async Task<IEnumerable<Customer>> Get()
         public async Task<IActionResult> Get()
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             try
             {
                 var customersList = await customers.ListCustomers();
@@ -49,10 +54,39 @@ namespace BlazorApp.Controllers
         // GET: api/<controller>
         [HttpGet]
         [Route("paged")]
+        [ProducesResponseType(typeof(PagedResult<Customer>), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> GetPaged(int page = 1, int pageSize = 10)
+        {
+            try {
+                
+                if (!ModelState.IsValid) {
+                    return BadRequest();
+                }
+                
+                var customersList = await customers.ListPaged(page, pageSize);
+                if (customersList == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(customersList);
+            } catch (Exception) {
+                return BadRequest();
+            }
+       
+        }
+
+        /*
+        // GET: api/<controller>
+        [HttpGet]
+        [Route("paged")]
         public async Task<PagedResult<Customer>> GetPaged(int page = 1, int pageSize = 10)
         {
             return await customers.ListPaged(page, pageSize);
         }
+        */
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
