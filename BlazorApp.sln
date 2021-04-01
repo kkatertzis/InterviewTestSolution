@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorApp", "BlazorApp\BlazorApp.csproj", "{B3CE71D3-8361-4D73-A9D1-13E8B7DAB793}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAppUnitTest", "BlazorAppTest\BlazorAppUnitTest.csproj", "{B083C90F-AA39-4B7F-953F-CDAC5F09CBFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAppUnitTest", "BlazorAppUnitTest\BlazorAppUnitTest.csproj", "{B083C90F-AA39-4B7F-953F-CDAC5F09CBFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAppIntegrationTests", "BlazorAppIntegrationTests\BlazorAppIntegrationTests.csproj", "{2F22BCAA-FB37-4A56-A0C3-CB3929474DA8}"
 EndProject
