@@ -48,8 +48,8 @@ else
         <td>@customer.Country</td>
         <td>@customer.Phone</td>
         <td>
-            <button type="button" class="btn green editBook" @onclick="@(() => EditCustomer(id) )">Edit</button>
-            <button type="button" class="btn red deleteBook" @onclick="@(() => ConfirmDelete(id, contactName) )">Delete</button>
+            <button type="button" class="btn green editBook btn-outline-info" @onclick="@(() => EditCustomer(id) )">Edit</button>
+            <button type="button" class="btn red deleteBook btn-outline-danger" @onclick="@(() => ConfirmDelete(id, contactName) )">Delete</button>
         </td>
     </tr>
         }
@@ -70,13 +70,14 @@ else
 
             <!-- Modal body -->
             <div class="modal-body">
+                <!-- This is not necessary -->
                 <input type="hidden" id="customerToDeleteField" bind=@DeleteId />
                 Are you sure you want to delete customer <span id="customerNameField"></span>?
             </div>
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-danger" @onclick=@DeleteCustomer>Delete</button>
             </div>
 

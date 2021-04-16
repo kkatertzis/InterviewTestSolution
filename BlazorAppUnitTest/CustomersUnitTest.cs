@@ -141,7 +141,7 @@ namespace BlazorAppUnitTest
             var controller = new CustomersController(customersDAL);
             controller.ModelState.AddModelError("CompanyName", "Required");
             //Act  
-            var data = await controller.GetPaged(5, 10);
+            var data = await controller.GetPaged(1, 10); // This is a left-over from my testing; page should be 1
             //data = null;
 
             //if (data != null)
@@ -375,7 +375,7 @@ namespace BlazorAppUnitTest
             //Arrange
             var controller = new CustomersController(customersDAL);
 
-            // Our test database is seeded with seedRowsCount datarows. Choose an valid value.
+            // Our test database is seeded with seedRowsCount datarows. Choose an invalid value.
             var customerBadID = seedRowsCount + 10;
             objTestCustomer.Id = customerBadID;
 
@@ -411,7 +411,7 @@ namespace BlazorAppUnitTest
             //Arrange  
             var controller = new CustomersController(customersDAL);
 
-            // Our test database is seeded with seedRowsCount datarows. Choose an valid value.
+            // Our test database is seeded with seedRowsCount datarows. Choose an invalid value.
             var customerBadID = seedRowsCount + 10;
 
             //Act  

@@ -40,16 +40,21 @@ namespace BlazorApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+            // Leftover from HttpClient implementation
+            /*
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
-            });
+            }); */
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Use alongside AddResponseCompression() in ConfigureServices
+            // app.UseResponseCompression();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -59,10 +64,13 @@ namespace BlazorApp
                 app.UseExceptionHandler("/Error");
             }
 
+            // Configure middleware to serve static files.
             app.UseStaticFiles();
 
+            // Matches request to an endpoint.
             app.UseRouting();
 
+            // Execute the matched endpoint.
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
